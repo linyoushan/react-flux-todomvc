@@ -1,0 +1,40 @@
+{
+  "name": "react-flux",
+  "version": "1.0.0",
+  "description": "A Demo for react with flux",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "watchify js/index.js -o js/bundle.js -v ",
+    "js-build": "browserify ./js/index.js > ./js/bundle.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vickl/react-flux.git"
+  },
+  "author": "vickl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vickl/react-flux/issues"
+  },
+  "homepage": "https://github.com/vickl/react-flux#readme",
+  "dependencies": {
+    "browserify": "^13.0.0",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
+    "reactify": "^1.1.1",
+    "uglify-js": "^2.6.2",
+    "watchify": "^3.7.0"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-react": "^3.1.0",
+    "reactify": "^1.1.1"
+  }
+}
