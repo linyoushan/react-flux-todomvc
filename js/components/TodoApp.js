@@ -34,7 +34,7 @@ module.exports = React.createClass({
             <div>
                 <Header />
                 <MainSection allTodos={this.state.allTodos}/>
-                <Footer />
+                <Footer allTodos={this.state.allTodos}/>
             </div>
         );
     }

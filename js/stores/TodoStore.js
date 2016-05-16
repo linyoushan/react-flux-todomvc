@@ -19,7 +19,7 @@ function create(text) {
 }
 
 function update(id, updates) {
-    _todos[id] = assign({}, _todos[i], updates);
+    _todos[id] = assign({}, _todos[id], updates);
 }
 
 function destroy(id) {
@@ -41,6 +41,14 @@ function areALLComplete() {
     return true;
 }
 
+function destroyALLComplete() {
+    for (var key in _todos) {
+        if (_todos[key].complete) {
+            delete _todos[key];
+        }
+    }
+}
+
 var TodoStore = assign({}, EventEmitter.prototype, {
     getAll: function () {
         return _todos;
@@ -59,7 +67,6 @@ var TodoStore = assign({}, EventEmitter.prototype, {
     }
 
 });
-
 AppDispatcher.register(function(payload) {
     var action = payload.action;
     switch(action.actionType) {
@@ -76,16 +83,33 @@ AppDispatcher.register(function(payload) {
             break;
 
         case 'TODO_UPDATE' :
-            update(action.id, action.updates);
+            if (action.text.trim() != "") {
+                update(action.id, {text: action.text});
+                TodoStore.emitChange();
+                break;
+            }
+
+        case 'TODO_DESTROY_COMPLETED' :
+            destroyALLComplete();
+            TodoStore.emitChange();
+            break;
+
+        case 'TODO_TOGGLE_COMPLETE' :
+            update(action.id, {complete:true});
+            TodoStore.emitChange();
+            break;
+
+        case 'TODO_TOGGLE_UNDO_COMPLETE' :
+            update(action.id, {complete:false});
             TodoStore.emitChange();
             break;
 
         case  'TODO_TOGGLE_COMPLETE_ALL' :
-           if(areALLComplete()){
-               toggleCompleteALL(false);
-           } else {
-               toggleCompleteALL(true);
-           }
+            if(areALLComplete()){
+                toggleCompleteALL(false);
+            } else {
+                toggleCompleteALL(true);
+            }
             TodoStore.emitChange();
             break;
 
@@ -94,7 +118,6 @@ AppDispatcher.register(function(payload) {
             TodoStore.emitChange();
             break;
     }
-
     return true;
 });
 

@@ -18,6 +18,12 @@ var TodoActions = {
         });
     },
 
+    destroyCompleted:function () {
+      AppDispatcher.handleViewAction({
+          actionType: 'TODO_DESTROY_COMPLETED'
+      })
+    },
+
     toggleCompleteALL: function(){
         AppDispatcher.handleViewAction({
             actionType: 'TODO_TOGGLE_COMPLETE_ALL'
@@ -28,6 +34,14 @@ var TodoActions = {
         AppDispatcher.handleViewAction({
             actionType: todo.complete? 'TODO_TOGGLE_UNDO_COMPLETE' : 'TODO_TOGGLE_COMPLETE',
             id: todo.id
+        })
+    },
+
+    update:function(id, text) {
+        AppDispatcher.handleViewAction({
+            actionType:"TODO_UPDATE",
+            id:id,
+            text:text
         })
     }
 }
